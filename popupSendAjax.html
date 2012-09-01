@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" lang="EN" dir="ltr">
+<head>
+<style type="text/css">
+body {width:160px; height:220px;color: #808080;font-family: arial;font-size:12px;}
+.boton{padding: 20px 90px;border: 0pxbackground-image:url('enviar.gif');
+background-repeat:no-repeat;background-position:right buttom;}
+form{color: #808080;font-size:12px;}
+.texto {font-size:12px;padding: 5px;padding-left:25px;border:1px solid #A9A9A9;}
+#marcador{border:0px solid #A9A9A9;color: #808080;}
+#autor{  background-image: url("user.png");  background-repeat: no-repeat;  background-position: 5px;}
+#destino{  background-image: url("phone.png");  background-repeat: no-repeat;  background-position: 5px;}
+#mensaje{font-family: arial;padding: 5px;}
+#enviar{height:22px ;width : 80px;background: -webkit-linear-gradient(#3399FF, #33CCFF);color:white;font-weight: bolder; font-size:11px;border: 0px;	-moz-border-radius: 20px;-webkit-border-radius: 20px;}
+</style>
+<script>
+function objetus(file) {
+    xmlhttp=false; this.AjaxFailedAlert = "Su navegador no soporta las funciónalidades de este sitio";
+    this.requestFile = file;this.encodeURIString = true;this.execute = false;
+    if (window.XMLHttpRequest) { this.xmlhttp = new XMLHttpRequest();
+        if (this.xmlhttp.overrideMimeType) {this.xmlhttp.overrideMimeType('text/xml');}} 
+    else if (window.ActiveXObject) { // IE
+        try {this.xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");}catch (e) {
+            try {this.xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");} 
+			catch (e) {this.xmlhttp = null;}
+        }
+        if (!this.xmlhttp && typeof XMLHttpRequest!='undefined') {
+            this.xmlhttp = new XMLHttpRequest();
+            if (!this.xmlhttp){this.failed = true; }}}
+    return this.xmlhttp ;
+}
+function recibe(_pagina,valorpost,capa){ 
+    ajax=objetus(_pagina);ajax.open("POST",_pagina,true);
+    ajax.onreadystatechange=function() {
+        if (ajax.readyState==1){ document.getElementById(capa).innerHTML = "<img src='loadingcircle.gif' align='center'> Aguarde por favor...";}
+        if (ajax.readyState==4) {
+            if(ajax.status==200){document.getElementById('capa').innerHTML = ajax.responseText;}
+            else{capa.innerHTML = "Error: ";}}}
+    if(valorpost!=""){
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        ajax.send(valorpost);} 
+		else {ajax.send(null);}} 
+</script>
+
+<body >
+<div id="capa">
+<form name="Miformulario" action="http://www.alxides.nixiweb.com/mko/destino.php" method="post" >
+<input id ="autor" class="texto" type="text"  name="autor" size="10" value="" maxlength="8" placeholder="Autor" /><br> 
+<input id ="destino" type="text" placeholder="Destino" class="texto"  name="destino" size="10" maxlength="8" /><br> 
+<textarea cols="25" rows="6" class="texto" name="mensaje"  placeholder="Mensaje" id="mensaje"onKeyDown="Contador(this.form.mensaje,this.form.marcador,110);" onKeyUp="Contador(this.form.mensaje,this.form.marcador,110);"></textarea><br>
+<input name="Submit" type="submit" value="ENVIAR" ID="enviar" /> </br>
+<img src='https://lh5.googleusercontent.com/s/v/lighthousefe_88.13/img/transparent.gif'  onerror="oculta('bot');" /> 
+
+<input readonly type="text" id="marcador" name="marcador" size="1" />Caracteres <div id="bot"></div>
+</form>
+
+
+
+<script type="text/javascript" >
+function Contador(CajaDeTexto, marcador, limiteMaximo) {
+if (CajaDeTexto.value.length > limiteMaximo)CajaDeTexto.value = CajaDeTexto.value.substring(0, limiteMaximo);
+else marcador.value = limiteMaximo - CajaDeTexto.value.length;}
+</script>
+
+<script type="text/javascript" >
+function oculta(id){
+    var elDiv = document.getElementById(id); //se define la variable "elDiv" igual a nuestro div
+    elDiv.style.display='none'; //damos un atributo display:none que oculta el div     
+  }
+</script>
+
+</div>
+</body>
